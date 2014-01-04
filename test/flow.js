@@ -41,3 +41,24 @@ exports['Run two steps flow'] = function (test) {
         test.fail();
     }
 };
+
+exports['Run error function in flow'] = function (test) {
+    test.async();
+    var flow = simpleflow.createFlow([step1, step2], errfn);
+    
+    flow.run(1);
+    
+    function step1(value, next) {
+        test.equal(value, 1);
+        next("error", null);
+    }
+    
+    function step2(value, next) {
+        test.equal(value, 2);
+    }
+    
+    function errfn(err) {
+        test.equal(err, "error");
+        test.done();
+    }
+};
