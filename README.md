@@ -10,7 +10,6 @@ Via npm on Node:
 npm install simpleflow
 ```
 
-
 ## Usage
 
 Reference in your program:
@@ -18,7 +17,7 @@ Reference in your program:
 ```js
 var simpleflow = require('simpleflow');
 ```
-[TBD]
+[TBD] (see tests).
 
 ## Development
 
@@ -32,6 +31,10 @@ npm test
 ## Samples
 
 TBD
+
+## Versions
+
+- 0.0.1: Published
 
 ## License
 
