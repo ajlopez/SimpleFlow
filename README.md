@@ -1,6 +1,6 @@
 # SimpleFlow
 
-Simple flow library to chain and run functions with asynchronous calls. WIP.
+Simple flow library to chain and run functions with synchronous and asynchronous calls. WIP.
 
 ## Installation
 
@@ -154,12 +154,18 @@ npm test
 
 ## Samples
 
-TBD
+- [Simple samples](https://github.com/ajlopez/SimpleFlow/tree/master/samples/simple).
+
+## To Do
+
+- Parallel execution of a list of functions
+- Map
+- Reduce
 
 ## Versions
 
 - 0.0.1: Published
-- 0.0.2: In progress
+- 0.0.2: Published
 
 ## License
 
