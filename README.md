@@ -15,9 +15,133 @@ npm install simpleflow
 Reference in your program:
 
 ```js
-var simpleflow = require('simpleflow');
+var sf = require('simpleflow');
 ```
-[TBD] (see tests).
+
+Create and run a sequence of synchronous functions:
+```js
+var seq = sf.sequence(
+    function (data) {
+        console.log(data);
+        return data + 1;
+    },
+    function (data) {
+        console.log(data);
+        return data + 1;
+    },
+    function (data) {
+        console.log(data);
+        return data + 1;
+    }
+);
+
+seq.run(1);
+```
+Output
+```
+1
+2
+3
+```
+In this way, you can define the sequence once, and run it many times with different initial data.
+
+Create and run a sequence of asynchronous functions:
+```js
+var seq = sf.sequence(
+    function (data, next) {
+        console.log(data);
+        next(null, data + 1);
+    },
+    function (data, next) {
+        console.log(data);
+        next(null, data + 1);
+    },
+    function (data, next) {
+        console.log(data);
+        next(null, data + 1);
+    }
+);
+
+seq.run(1);
+```
+Output
+```
+1
+2
+3
+```
+You can mix both kind of functions:
+```js
+var seq = sf.sequence(
+    function (data) {
+        console.log(data);
+        return data + 1;
+    },
+    function (data, next) {
+        console.log(data);
+        next(null, data + 1);
+    },
+    function (data, next) {
+        console.log(data);
+        next(null, data + 1);
+    }
+);
+
+seq.run(1);
+```
+Output
+```
+1
+2
+3
+```
+
+The return of `run` is a future object with `success` and `fail` associated functions:
+```js
+var seq = sf.sequence(
+    function (data, next) {
+        next(null, data + 1;
+    },
+    function (data, next) {
+        next(null, data + 1);
+    },
+    function (data, next) {
+        next(null, data + 1);
+    }
+);
+
+seq.run(1).success(
+    function (data) {
+        console.log('result:', data);
+    }
+).fail(
+    function (err) {
+        console.log('error:', err);
+    }
+);
+```
+Output
+```
+result: 4
+```
+So, you can define `success` and `fail` behaviour in your own scope. You can define the sequence once, and run
+it many times, with different initial data and `success`, `fail` context. Partial example, an action in a controller:
+
+```js
+var seq = sf.sequence(step1, step2, step3);
+
+// ...
+
+function index(req, res) {
+    seq.run(req.params.id)
+        .success(function (data) {
+            res.render('index', { model: data });
+        })
+        .fail(function (err) {
+            res.render('error', { error: err });
+        });
+}
+```
 
 ## Development
 
@@ -35,6 +159,7 @@ TBD
 ## Versions
 
 - 0.0.1: Published
+- 0.0.2: In progress
 
 ## License
 
