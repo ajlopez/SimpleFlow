@@ -12,6 +12,20 @@ exports['execute sync function in sequence'] = function (test) {
     seq.run(42);
 };
 
+exports['execute sync function in sequence with success'] = function (test) {
+    test.async();
+    
+    var seq = sf.sequence(function (data) {
+        test.equal(data, 42);
+        return data + 1;
+    });
+    
+    seq.run(42).success(function (data) {
+        test.equal(data, 43);
+        test.done();
+    });
+};
+
 exports['execute two sync functions in sequence'] = function (test) {
     test.async();
     
