@@ -96,6 +96,45 @@ exports['execute two sync function in sequence with success in sequence'] = func
     
     seq.run(42);
 };
+
+exports['execute two sync function in sequence with fail'] = function (test) {
+    test.async();
+    
+    var seq = sf.sequence(
+        function (data) {
+            test.equal(data, 42);
+            throw "error";
+        },
+        function (data) {
+            throw "error 2";
+        }
+    );
+    
+    seq.run(42).fail(function (err) {
+        test.equal(err, "error");
+        test.done();
+    });
+};
+
+exports['execute two sync function in sequence with fail in sequence'] = function (test) {
+    test.async();
+    
+    var seq = sf.sequence(
+        function (data) {
+            test.equal(data, 42);
+            throw "error";
+        },
+        function (data) {
+            throw "error 2";
+        }
+    ).fail(function (err) {
+        test.equal(err, "error");
+        test.done();
+    });
+    
+    seq.run(42);
+};
+
 exports['execute three sync functions in sequence'] = function (test) {
     test.async();
     
