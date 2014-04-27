@@ -1,9 +1,11 @@
 
 var simpleflow = require('..');
 
+/*
 exports['Create flow'] = function (test) {
     test.ok(simpleflow.createFlow([], function (err) {}));
 };
+*/
 
 exports['Run one step flow'] = function (test) {
     test.async();
